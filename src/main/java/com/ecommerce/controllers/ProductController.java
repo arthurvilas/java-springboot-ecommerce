@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.websocket.server.PathParam;
-
 import com.ecommerce.model.Product;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/products") // http://localhost:8080/products
+@RequestMapping("api/v1/products") // http://localhost:8080/products
 public class ProductController {
 
     private List<Product> productsList = new ArrayList<>();
