@@ -2,11 +2,15 @@ package com.ecommerce.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import com.ecommerce.model.Product;
+import com.ecommerce.models.Product;
+import com.ecommerce.services.ProductService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,31 +18,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/v1/products") // http://localhost:8080/products
+@RequestMapping("api/v1/products")
 public class ProductController {
 
-    private List<Product> productsList = new ArrayList<>();
+    @Autowired
+    private ProductService productService;
 
     // Get a product
     @GetMapping("/{id}")
-    public Product product(@PathVariable("id") Long id) {
-        Optional<Product> foundProduct = productsList.stream().filter(p -> p.getId() == id).findFirst();
-        if (foundProduct.isEmpty()) {
-            return null;
-        }
-        return foundProduct.get();
+    public ResponseEntity<Product> getProduct(@PathVariable("id") Long id) {
+        Product product = productService.findById(id);
+        if (product != null)
+            return ResponseEntity.ok().body(product);
+
+        return ResponseEntity.badRequest().body(null);
     }
 
-    // Create a product
-    @PostMapping("/")
-    public Product product(@RequestBody Product createdProduct) {
-        productsList.add(createdProduct);
-        return createdProduct;
-    }
+    // // Delete a product
+    // @DeleteMapping("/{id}")
+    // public Product deleteProduct(@PathVariable("id") Long id) {
+
+    // }
+
+    // // Create a product
+    // @PostMapping("/")
+    // public Product createProduct(@RequestBody Product createdProduct) {
+
+    // }
+
+    // // Update a product
+    // @PatchMapping("/{id}")
+    // public Product updateProduct(@RequestBody Product updatedProduct,
+    // @PathVariable("id") Long id) {
+
+    // }
 
     // Get all products
     @GetMapping("/list")
-    public List<Product> list() {
-        return productsList;
+    public ResponseEntity<List<Product>> getAllProducts() {
+        List<Product> foundProducts = productService.findAll();
+        return ResponseEntity.ok().body(foundProducts);
     }
 }

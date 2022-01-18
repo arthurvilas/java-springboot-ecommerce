@@ -1,4 +1,4 @@
-package com.ecommerce.model;
+package com.ecommerce.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,24 +13,15 @@ public class Product {
     @Id
     @SequenceGenerator(name = "product_sequence", sequenceName = "product_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_sequence")
-    // Hibernate: create sequence
-    // product_sequence start 1 increment 1 Hibernate:
-
-    // create table
-
-    // product (
-    // id int8 not null,
-
-    // description varchar(255),
-
-    // name varchar(255),
-    // price float8,
-
-    // primary key (id)
-    // )
     private Long id;
+
+    // @Column(name = "name") - Option to define custom column names
     private String name;
+
+    // @Column(name = "price")
     private Double price;
+
+    // @Column(name = "description")
     private String description;
 
     public Product() {
