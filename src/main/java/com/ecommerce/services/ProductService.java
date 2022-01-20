@@ -7,7 +7,9 @@ import com.ecommerce.models.Product;
 import com.ecommerce.repositories.ProductRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProductService {
 
     @Autowired
@@ -20,5 +22,25 @@ public class ProductService {
     public Product findById(Long id) {
         Optional<Product> product = productRepository.findById(id);
         return product.get();
+    }
+
+    public Product create(Product obj) {
+        return productRepository.save(obj);
+    }
+
+    public void delete(Long id) {
+        productRepository.deleteById(id);
+    }
+
+    public Product update(Long id, Product obj) {
+        Product entity = productRepository.getById(id);
+        updateData(entity, obj);
+        return productRepository.save((entity));
+    }
+
+    private void updateData(Product entity, Product obj) {
+        entity.setName(obj.getName());
+        entity.setPrice(obj.getPrice());
+        entity.setDescription(obj.getDescription());
     }
 }
