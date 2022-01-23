@@ -29,10 +29,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable("id") Long id) {
         Product product = productService.findById(id);
-        if (product != null)
-            return ResponseEntity.ok().body(product);
-
-        return ResponseEntity.badRequest().body(null);
+        return ResponseEntity.ok().body(product);
     }
 
     // Delete a product
@@ -46,8 +43,11 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody Product obj) {
         obj = productService.create(obj);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(obj.getId()).toUri();
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(obj.getId())
+                .toUri();
 
         return ResponseEntity.created(uri).body(obj);
     }

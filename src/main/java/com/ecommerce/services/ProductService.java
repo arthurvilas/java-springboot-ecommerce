@@ -6,7 +6,9 @@ import java.util.Optional;
 import com.ecommerce.models.Product;
 import com.ecommerce.repositories.ProductRepository;
 
+import com.ecommerce.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,7 +23,7 @@ public class ProductService {
 
     public Product findById(Long id) {
         Optional<Product> product = productRepository.findById(id);
-        return product.get();
+        return product.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public Product create(Product obj) {
@@ -29,7 +31,11 @@ public class ProductService {
     }
 
     public void delete(Long id) {
-        productRepository.deleteById(id);
+        try {
+            productRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     public Product update(Long id, Product obj) {
