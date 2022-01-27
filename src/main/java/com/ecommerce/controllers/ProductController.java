@@ -7,16 +7,14 @@ import com.ecommerce.models.Product;
 import com.ecommerce.services.ProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("api/v1/products")
@@ -41,7 +39,7 @@ public class ProductController {
 
     // Create a product
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product obj) {
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody Product obj) {
         obj = productService.create(obj);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -54,7 +52,7 @@ public class ProductController {
 
     // Update a product
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody Product obj) {
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @Valid @RequestBody Product obj) {
         obj = productService.update(id, obj);
         return ResponseEntity.ok().body(obj);
     }

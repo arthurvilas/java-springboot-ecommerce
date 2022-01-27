@@ -3,13 +3,15 @@ package com.ecommerce.services;
 import java.util.List;
 import java.util.Optional;
 
+import com.ecommerce.exceptions.BadRequestException;
+import com.ecommerce.exceptions.NotFoundException;
 import com.ecommerce.models.Product;
 import com.ecommerce.repositories.ProductRepository;
 
-import com.ecommerce.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @Service
 public class ProductService {
@@ -23,7 +25,7 @@ public class ProductService {
 
     public Product findById(Long id) {
         Optional<Product> product = productRepository.findById(id);
-        return product.orElseThrow(() -> new ResourceNotFoundException(id));
+        return product.orElseThrow(() -> new NotFoundException("No product with id: " + id));
     }
 
     public Product create(Product obj) {
@@ -34,7 +36,7 @@ public class ProductService {
         try {
             productRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
-            throw new ResourceNotFoundException(id);
+            throw new NotFoundException("No product with id: " + id);
         }
     }
 

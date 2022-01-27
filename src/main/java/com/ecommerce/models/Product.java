@@ -1,12 +1,14 @@
 package com.ecommerce.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
+import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
+@Data
 @Entity
 @Table
 public class Product {
@@ -15,61 +17,16 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_sequence")
     private Long id;
 
-    // @Column(name = "name") - Option to define custom column names
+    @NotNull
+    @Length(min = 2, max = 20)
     private String name;
 
-    // @Column(name = "price")
+    @NotNull
+    @Min(value = 0)
     private Double price;
 
-    // @Column(name = "description")
+    @NotNull
     private String description;
 
-    public Product() {
-    }
-
-    public Product(Long id, String name, Double price, String description) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.description = description;
-    }
-
-    // Postgres can generate IDs
-    public Product(String name, Double price, String description) {
-        this.name = name;
-        this.price = price;
-        this.description = description;
-    }
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Double getPrice() {
-        return this.price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+    private String image;
 }
