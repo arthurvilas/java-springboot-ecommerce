@@ -3,7 +3,6 @@ package com.ecommerce.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.ecommerce.exceptions.BadRequestException;
 import com.ecommerce.exceptions.NotFoundException;
 import com.ecommerce.models.Product;
 import com.ecommerce.repositories.ProductRepository;
@@ -11,7 +10,6 @@ import com.ecommerce.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 @Service
 public class ProductService {

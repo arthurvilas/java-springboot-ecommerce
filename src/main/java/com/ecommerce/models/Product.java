@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 
 @Data
 @Entity
@@ -17,15 +16,15 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_sequence")
     private Long id;
 
-    @NotNull
-    @Length(min = 2, max = 20)
+    @NotNull(message = "Name must not be null")
+    @Length(min = 2, max = 20, message = "Name must have between 2 and 20 characters")
     private String name;
 
-    @NotNull
-    @Min(value = 0)
+    @NotNull(message = "Price must not be null")
+    @Min(value = 0, message = "Price must be equal or greater than 0")
     private Double price;
 
-    @NotNull
+    @NotNull(message = "Description must not be null")
     private String description;
 
     private String image;

@@ -11,7 +11,7 @@ import java.time.Instant;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ErrorDto {
+public class NotFoundErrorDto {
     private Instant timestamp;
     private Integer status;
     private String error;
