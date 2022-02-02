@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 
+@CrossOrigin
 @RestController
 @RequestMapping("api/v1/products")
 public class ProductController {
