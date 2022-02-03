@@ -27,5 +27,6 @@ public class Product {
     @NotNull(message = "Description must not be null")
     private String description;
 
+    @NotNull(message = "Image must not be null")
     private String image;
 }
